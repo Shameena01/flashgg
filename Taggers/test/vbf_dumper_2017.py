@@ -170,8 +170,8 @@ from flashgg.MetaData.samples_utils import SamplesManager
 
 process.source = cms.Source ("PoolSource",
                              fileNames = cms.untracked.vstring(
-"file:/afs/cern.ch/work/j/jlangfor/public/hgg/stxs/1p1/test_microAOD/vbf_2016_microAOD.root"
-                             )
+#"file:/afs/cern.ch/work/j/jlangfor/public/hgg/stxs/1p1/test_microAOD/vbf_2016_microAOD.root"
+#                                 "/store/user/spigazzi/flashgg/Era2016_RR-17Jul2018_v1/legacyRun2TestV1/DoubleEG/Era2016_RR-17Jul2018_v1-legacyRun2TestV1-v0-Run2016D-17Jul2018-v1/190319_104225/0002/myMicroAODOutputFile_2436.root","/store/user/spigazzi/flashgg/Era2016_RR-17Jul2018_v1/legacyRun2TestV1/DoubleEG/Era2016_RR-17Jul2018_v1-legacyRun2TestV1-v0-Run2016D-17Jul2018-v1/190319_104225/0002/myMicroAODOutputFile_2462.root")
 )
 
 process.TFileService = cms.Service("TFileService",
