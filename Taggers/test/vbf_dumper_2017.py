@@ -39,7 +39,7 @@ customize.options.register('pujidWP',
                            'pujidWP')
 
 customize.options.register('runOnZee',
-                           True,
+                           False,
                            VarParsing.VarParsing.multiplicity.singleton,
                            VarParsing.VarParsing.varType.bool,
                            'runOnZee')
