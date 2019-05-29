@@ -22,6 +22,42 @@
 #include <vector>
 #include <algorithm>
 
+
+
+
+///
+
+#include "DataFormats/TrackReco/interface/HitPattern.h"
+#include "DataFormats/PatCandidates/interface/Jet.h"
+#include "DataFormats/Math/interface/deltaR.h"
+#include "flashgg/DataFormats/interface/Jet.h"
+
+#include <string>
+#include <utility>
+#include <TLorentzVector.h>
+#include "TMath.h"
+
+
+
+
+///
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using namespace std;
 using namespace edm;
 
@@ -49,6 +85,33 @@ namespace flashgg {
         EDGetTokenT<HTXS::HiggsClassification> newHTXSToken_;
 
         string systLabel_;
+
+
+        ///
+
+
+
+        bool associatedZ_;
+        bool associatedW_;
+        bool VhasDaughters_;
+        bool VhasNeutrinos_;
+        bool VhasLeptons_;
+
+
+
+        bool VhasHadrons_;
+        bool VhasMissingLeptons_;
+        float Vpt_;
+        float costhetastar_;
+
+
+
+
+
+        ///
+
+
+
 
         bool dropNonGoldData_;
         bool setArbitraryNonGoldMC_;
@@ -135,6 +198,177 @@ namespace flashgg {
         unsigned int index_subsubleadq = std::numeric_limits<unsigned int>::max();
         float pt_leadq = 0., pt_subleadq = 0., pt_subsubleadq = 0.;
         Point higgsVtx;
+
+        ///
+
+        associatedZ_=0;
+        associatedW_=0;
+        VhasDaughters_=0;
+        VhasNeutrinos_=0;
+        VhasLeptons_=0;
+        VhasHadrons_=0;
+        VhasMissingLeptons_=0;
+        Vpt_=0;
+        costhetastar_ =  0;
+
+
+        //VH variables
+
+        //*****gen level leptons**********
+        if( ! evt.isRealData() )
+            {
+                evt.getByToken( genPartToken_, genParticles );
+                for( unsigned int genLoop = 0 ; genLoop < genParticles->size(); genLoop++ )
+                    {
+                        int pdgid = genParticles->ptrAt( genLoop )->pdgId();
+                        int dpdgid[2] = {0,0};
+                        if(pdgid ==23) //z-boson
+                            {
+                                associatedZ_=1;
+                                if( genParticles->ptrAt( genLoop )->numberOfDaughters()==2)
+                                    {
+                                        VhasDaughters_=1;
+                                        dpdgid[0]=genParticles->ptrAt(genLoop)->daughter(0)->pdgId();
+                                        //dpdgid[1]=genParticles->ptrAt(genLoop)->daughter(1)->pdgId();
+                                        Vpt_=genParticles->ptrAt( genLoop )->pt();
+                                        if(fabs(dpdgid[0])==12||fabs(dpdgid[0])==14||fabs(dpdgid[0])==16) //look for neutrino decay of Z
+                                            {
+                                                VhasNeutrinos_=1;
+                                            }
+                                        if(fabs(dpdgid[0])==11||fabs(dpdgid[0])==13||fabs(dpdgid[0])==15) //look for lepton decay of Z
+                                            {
+                                                VhasLeptons_=1;
+                                            }
+                                        if(fabs(dpdgid[0])>0&&fabs(dpdgid[0])<9) //look for quark decay of Z
+                                            {
+                                                VhasHadrons_=1;
+                                            }
+                                    }
+                            }
+                        if(fabs(pdgid)==24) //look for W
+                            {
+                                associatedW_=1;
+                                if( genParticles->ptrAt( genLoop )->numberOfDaughters()==2)
+                                    {
+                                        VhasDaughters_=1;
+                                        Vpt_=genParticles->ptrAt( genLoop )->pt();
+                                        dpdgid[0]=genParticles->ptrAt(genLoop)->daughter(0)->pdgId();
+                                        //dpdgid[1]=genParticles->ptrAt(genLoop)->daughter(1)->pdgId();
+                                        if(fabs(dpdgid[0])==12||fabs(dpdgid[0])==14||fabs(dpdgid[0])==16) //look for neutrino decay of W
+                                            {
+                                                VhasNeutrinos_=1;
+                                                VhasLeptons_=1;
+                                            }
+                                        if(fabs(dpdgid[0])==11||fabs(dpdgid[0])==13||fabs(dpdgid[0])==15) //look for lepton decay of W
+                                            {
+                                                VhasNeutrinos_=1;
+                                                VhasLeptons_=1;
+                                            }
+                                        if(fabs(dpdgid[0])>0&&fabs(dpdgid[0])<9) //look for quark decay of W
+                                            {
+                                                VhasHadrons_=1;
+                                            }
+
+                                    }
+                            }
+                        if( pdgid == 25 || pdgid == 22 )
+                            {
+                                higgsVtx = genParticles->ptrAt( genLoop )->vertex();
+                                continue;
+                            }
+                    }
+            }
+
+        //*******************
+        //costhetastar
+
+
+
+        for( unsigned int diphoIndex = 0; diphoIndex < diPhotons->size(); diphoIndex++ ) {
+
+            edm::Ptr<flashgg::DiPhotonCandidate> dipho  = diPhotons->ptrAt( diphoIndex );
+            edm::Ptr<flashgg::DiPhotonMVAResult> mvares = mvaResults->ptrAt( diphoIndex );
+            //if( dipho->leadingPhoton()->pt() < ( dipho->mass() )*leadPhoOverMassThreshold_ ) { continue; }
+            //if( dipho->subLeadingPhoton()->pt() < ( dipho->mass() )*subleadPhoOverMassThreshold_ ) { continue; }
+
+            //double idmva1 = dipho->leadingPhoton()->phoIdMvaDWrtVtx( dipho->vtx() );
+            //double idmva2 = dipho->subLeadingPhoton()->phoIdMvaDWrtVtx( dipho->vtx() );
+            //if( idmva1 <= phoIdMVAThreshold_ || idmva2 <= phoIdMVAThreshold_ ) { continue; }
+
+            //if( mvares->result < diphoMVAThreshold_ ) { continue; }
+
+            // cut on pt_gg / m_gg
+            //if( dipho->pt() / dipho->mass() < 1. )   {continue;}
+
+            std::vector<edm::Ptr<flashgg::Jet> > goodJets;
+
+            unsigned int jetCollectionIndex = diPhotons->ptrAt( diphoIndex )->jetCollectionIndex();
+            for( size_t ijet = 0; ijet < Jets[jetCollectionIndex]->size(); ijet++ ) {
+
+                edm::Ptr<flashgg::Jet> thejet = Jets[jetCollectionIndex]->ptrAt( ijet );
+
+                // if(!thejet->passesJetID  ( flashgg::Tight2017 ) ) { continue; }
+                //if( fabs( thejet->eta() ) > jetEtaThreshold_ )  { continue; }
+                //if( thejet->pt() < jetPtThreshold_ )            { continue; }
+
+                //float dPhiJetToPhoL = deltaPhi( dipho->leadingPhoton()->phi(), thejet->phi() );
+                //float dEtaJetToPhoL = dipho->leadingPhoton()->eta() - thejet->eta();
+                //float dRJetToPhoL   = sqrt( dEtaJetToPhoL * dEtaJetToPhoL + dPhiJetToPhoL * dPhiJetToPhoL );
+
+                //float dPhiJetToPhoS = deltaPhi( dipho->subLeadingPhoton()->phi(), thejet->phi() );
+                //float dEtaJetToPhoS = dipho->subLeadingPhoton()->eta() - thejet->eta();
+                //float dRJetToPhoS   = sqrt( dEtaJetToPhoS * dEtaJetToPhoS + dPhiJetToPhoS * dPhiJetToPhoS );
+
+                //if( abs( dRJetToPhoL ) < dRJetToPhoLThreshold_ )            { continue; }
+                //if( abs( dRJetToPhoS ) < dRJetToPhoSThreshold_ )            { continue; }
+
+                goodJets.push_back( thejet );
+            }
+
+            if( goodJets.size() < 2 ) { continue; }
+
+
+
+            TLorentzVector jetl, jets, dijet, phol, phos, diphoton, vstar;
+
+            phol.SetPtEtaPhiE( dipho->leadingPhoton()->pt(), dipho->leadingPhoton()->eta(), dipho->leadingPhoton()->phi(), dipho->leadingPhoton()->energy() );
+            phos.SetPtEtaPhiE( dipho->subLeadingPhoton()->pt(), dipho->subLeadingPhoton()->eta(), dipho->subLeadingPhoton()->phi(), dipho->subLeadingPhoton()->energy() );
+            jetl.SetPtEtaPhiE( goodJets[0]->pt(), goodJets[0]->eta(), goodJets[0]->phi(), goodJets[0]->energy() );
+            jets.SetPtEtaPhiE( goodJets[1]->pt(), goodJets[1]->eta(), goodJets[1]->phi(), goodJets[1]->energy() );
+
+            diphoton = phol + phos;
+            dijet = jetl + jets;
+
+            diphoton = phol + phos;
+            vstar = diphoton + dijet;
+            diphoton.Boost( -vstar.BoostVector() );
+            costhetastar_ = -diphoton.CosTheta();
+
+        }
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+        ///
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         
         if( ! evt.isRealData() ) {
             evt.getByToken( genPartToken_, genParticles );

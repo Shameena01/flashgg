@@ -1,0 +1,42 @@
+000 (2969657.000.000) 05/29 14:12:22 Job submitted from host: <137.138.76.70:9618?addrs=137.138.76.70-9618&noUDP&sock=4033_e18a_3>
+...
+001 (2969657.000.000) 05/29 14:15:05 Job executing on host: <188.184.180.95:9618?addrs=188.184.180.95-9618+[2001-1458-301-81--100-70]-9618&noUDP&sock=19189_a2eb_3>
+...
+006 (2969657.000.000) 05/29 14:15:13 Image size of job updated: 1480
+	2  -  MemoryUsage of job (MB)
+	1280  -  ResidentSetSize of job (KB)
+...
+006 (2969657.000.000) 05/29 14:15:48 Image size of job updated: 315040
+	2  -  MemoryUsage of job (MB)
+	1280  -  ResidentSetSize of job (KB)
+...
+004 (2969657.000.000) 05/29 14:15:49 Job was evicted.
+	(0) Job terminated and was requeued
+		Usr 0 00:00:16, Sys 0 00:00:07  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+	19332  -  Run Bytes Sent By Job
+	1857  -  Run Bytes Received By Job
+	(1) Normal termination (return value 84)
+	The job attribute OnExitRemove expression 'NumJobCompletions > JobMaxRetries || ExitCode == 0' evaluated to FALSE
+...
+001 (2969657.000.000) 05/29 14:23:55 Job executing on host: <128.142.101.20:9618?addrs=128.142.101.20-9618+[2001-1458-301-89--100-1c1]-9618&noUDP&sock=16101_8676_3>
+...
+006 (2969657.000.000) 05/29 14:24:03 Image size of job updated: 325000
+	13  -  MemoryUsage of job (MB)
+	12464  -  ResidentSetSize of job (KB)
+...
+005 (2969657.000.000) 05/29 14:27:50 Job terminated.
+	(1) Normal termination (return value 84)
+		Usr 0 00:00:16, Sys 0 00:00:09  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+		Usr 0 00:00:16, Sys 0 00:00:09  -  Total Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Local Usage
+	19332  -  Run Bytes Sent By Job
+	1857  -  Run Bytes Received By Job
+	38664  -  Total Bytes Sent By Job
+	3714  -  Total Bytes Received By Job
+	Partitionable Resources :    Usage  Request Allocated
+	   Cpus                 :                 1         1
+	   Disk (KB)            :   750000   750000   2167832
+	   Memory (MB)          :       13     2000      2000
+...

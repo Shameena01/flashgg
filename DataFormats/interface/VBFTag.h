@@ -63,6 +63,22 @@ namespace flashgg {
 
         const float ptHjj() const;
 
+        //VH hadronic variables
+        //gen info to veto leptonic channels
+        bool VhasLeptons() const {return VhasLeptons_;} 
+
+        bool associatedZ() const {return associatedZ_;}
+        bool associatedW() const {return  associatedW_;}
+        bool VhasDaughters() const {return VhasDaughters_;}
+        bool VhasNeutrinos() const {return VhasNeutrinos_;}
+        bool VhasHadrons() const {return VhasHadrons_;}
+        bool VhasMissingLeptons() const {return VhasMissingLeptons_;}
+        float Vpt() const {return Vpt_;}
+
+        //variable to discriminate against ggH
+        float costhetastar() const {return costhetastar;}
+
+
         DiPhotonTagBase::tag_t tagEnum() const override {return DiPhotonTagBase::kVBF; }
 
         float alphaUp() const { return alphaUp_; }
@@ -85,6 +101,26 @@ namespace flashgg {
         float scaleUp_[3];
         float scaleDown_[3];
         float pdf_[60];
+
+
+        ///
+        bool VhasLeptons_;
+        bool associatedZ_;
+        bool associatedW_;
+        bool VhasDaughters_;
+        bool VhasNeutrinos_;
+        bool VhasHadrons_;
+        bool VhasMissingLeptons_;
+        float Vpt_;
+        float costhetastar_;      
+        ///
+
+
+
+
+
+
+
 
     };
 

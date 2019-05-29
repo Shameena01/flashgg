@@ -232,8 +232,17 @@ new_variables = [
     "dijet_jet1_pujid_mva := leading_pujidMVA()",
     "dijet_jet2_pujid_mva := subleading_pujidMVA()",
     "dipho_pt             := diPhoton.pt",
-    "dijet_pt             := VBFMVA.dijet_pt"#,
+    "dijet_pt             := VBFMVA.dijet_pt",
 #    "n_gen_jet_30         := nGenJet30()"
+    "associatedZ_present  := associatedZ()",
+    "associatedW_present  := associatedW()",
+    "VDaughters_present   := VhasDaughters()",
+    "VNeutrinos_present   := VhasNeutrinos()",
+    "VLeptons_present     := VhasLeptons()",
+    "VHadrons_present     := VhasHadrons()",
+    "VMissingLeptons_present   := VhasMissingLeptons()",
+    "VPt                  := Vpt()",
+    "cosThetaStar         := cosThetaStar()"
 ]
 
 matching_photon = [

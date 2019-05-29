@@ -826,7 +826,11 @@ class SamplesManager(object):
         returns: tuple containing datasetName,cross-section,numberOfEvents,listOfFiles,specialPrepend
         
         """
+        print "checking catalog"
+        
         catalog = self.readCatalog(True)
+        #print catalog
+        print "checking catalog done"
         print primary
         primary = primary.lstrip("/")
         if "/" in primary:
@@ -838,6 +842,11 @@ class SamplesManager(object):
         totWeights = 0.
         specialPrepend = ""
         for dataset,info in catalog.iteritems():
+            print "checking dataset"
+            print dataset
+            print "checked dataset done"
+            if "/" not in dataset:
+               continue
             empty,prim,sec,tier=dataset.split("/")
             if prim == primary:
                 if secondary and sec != secondary:
