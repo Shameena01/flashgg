@@ -242,7 +242,7 @@ new_variables = [
     "VHadrons_present     := VhasHadrons()",
     "VMissingLeptons_present   := VhasMissingLeptons()",
     "VPt                  := Vpt()",
-    "cosThetaStar         := cosThetaStar()"
+    "costhetastar         := costhetastar()"
 ]
 
 matching_photon = [

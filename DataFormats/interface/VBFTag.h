@@ -76,7 +76,7 @@ namespace flashgg {
         float Vpt() const {return Vpt_;}
 
         //variable to discriminate against ggH
-        float costhetastar() const {return costhetastar;}
+        float costhetastar() const {return costhetastar_;}
 
 
         DiPhotonTagBase::tag_t tagEnum() const override {return DiPhotonTagBase::kVBF; }
