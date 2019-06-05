@@ -890,7 +890,8 @@ class SamplesManager(object):
             files = [ allFiles[i] for i in range(jobId,len(allFiles),nJobs) ]
         else:
             files = allFiles
-
+       
+        specialPrepend = "root://xrootd.ba.infn.it:1094/"
         return found,xsec,totEvents,files,maxEvents,specialPrepend
 
     def getAllDatasets(self):
